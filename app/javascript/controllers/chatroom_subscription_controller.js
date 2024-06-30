@@ -21,6 +21,7 @@ export default class extends Controller {
 
   #userStyleClass(currentUserIsSender) {
     return currentUserIsSender ? "sender-style" : "receiver-style"
+
   }
 
   #buildMessageElement(currentUserIsSender, message) {
@@ -38,15 +39,17 @@ export default class extends Controller {
   #insertMessage(data) {
     console.log("Received data: ", data);
 
+
     const currentUserIsSender = this.currentUserIdValue === data.sender_id;
+    console.log(currentUserIsSender)
+    console.log(this.currentUserIdValue)
     if (!data) {
       console.error("Received data is undefined or empty.");
       return;
     }
 
-    const messageElement = this.#buildMessageElement(currentUserIsSender, data);
-
-
+    const messageElement = this.#buildMessageElement(currentUserIsSender, data.message);
+      console.log("messageElement:", messageElement);
     // Inserting the messageElement in the DOM
     this.messagesTarget.insertAdjacentHTML("beforeend", messageElement);
     this.messagesTarget.scrollTo(0, this.messagesTarget.scrollHeight);
